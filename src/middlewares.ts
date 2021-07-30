@@ -1,12 +1,14 @@
 import { ErrorRequestHandler } from "express";
 
 const notFound: ErrorRequestHandler = (err, req, res, next) => {
+  console.log("Not Found Handler Called.");
   res.status(404);
   const error = new Error(`🔍 - Not Found - ${req.originalUrl}`);
   next(error);
 };
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  console.log("Error Handler Called.");
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   res.status(statusCode);
   res.json({
