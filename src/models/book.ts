@@ -1,15 +1,15 @@
-import mongoose, { Schema } from "mongoose";
+import { model, Schema, ObjectId } from "mongoose";
 
-interface Book {
-  _id: string;
+interface IBook {
+  _id: ObjectId;
   title: string;
-  author: string;
+  author: ObjectId;
   summary: string;
   isbn: string;
   genre: string[];
 }
 
-const bookSchema = new Schema<Book>({
+const bookSchema = new Schema<IBook>({
   title: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: "Author", required: true },
   summary: { type: String, required: true },
@@ -17,8 +17,8 @@ const bookSchema = new Schema<Book>({
   genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
 });
 
-bookSchema.virtual("url").get(function (this: Book) {
+bookSchema.virtual("url").get(function (this: IBook) {
   return `/catalog/book/${this._id}`;
 });
 
-export default mongoose.model("Book", bookSchema);
+export default model<IBook>("Book", bookSchema);

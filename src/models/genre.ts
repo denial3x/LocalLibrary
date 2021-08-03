@@ -1,7 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import { model, ObjectId, Schema } from "mongoose";
 
 interface Genre {
-  _id: string;
+  _id: ObjectId;
   name: string;
 }
 
@@ -12,3 +12,5 @@ const genreSchema = new Schema<Genre>({
 genreSchema.virtual("url").get(function (this: Genre): string {
   return `/catalog/genres/${this._id}`;
 });
+
+export default model<Genre>("Genre", genreSchema);

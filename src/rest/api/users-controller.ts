@@ -8,10 +8,4 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/cool", (req, res) => {
-  res.json({
-    message: "You're so cool!",
-  });
-});
-
 export { router as usersController };
