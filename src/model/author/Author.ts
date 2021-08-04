@@ -1,13 +1,6 @@
-import { model, ObjectId, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { DateTime } from "luxon";
-
-interface IAuthor {
-  _id: ObjectId;
-  first_name: string;
-  family_name: string;
-  date_of_birth?: Date;
-  date_of_death?: Date;
-}
+import { IAuthor } from "./IAuthor";
 
 const authorSchema = new Schema<IAuthor>({
   first_name: { type: String, required: true, maxLength: 100 },

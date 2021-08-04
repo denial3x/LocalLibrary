@@ -1,14 +1,5 @@
-import { model, ObjectId, Schema } from "mongoose";
-
-type BookInstanceType = "Available" | "Maintenance" | "Loaned" | "Reserved";
-
-interface IBookInstance {
-  _id: ObjectId;
-  book: ObjectId;
-  imprint: string;
-  status: BookInstanceType;
-  due_back?: Date;
-}
+import { model, Schema } from "mongoose";
+import { IBookInstance } from "./IBookInstance";
 
 const bookInstanceSchema = new Schema<IBookInstance>({
   book: { type: Schema.Types.ObjectId, ref: "Book", required: true },

@@ -1,13 +1,5 @@
-import { model, Schema, ObjectId } from "mongoose";
-
-interface IBook {
-  _id: ObjectId;
-  title: string;
-  author: ObjectId;
-  summary: string;
-  isbn: string;
-  genre: string[];
-}
+import { model, Schema } from "mongoose";
+import { IBook } from "./IBook";
 
 const bookSchema = new Schema<IBook>({
   title: { type: String, required: true },
