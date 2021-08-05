@@ -5,7 +5,7 @@ export type GenreDocument = Genre & Document;
 
 @Schema()
 export class Genre {
-  @Prop({ required: true, minlength: 3, maxlength: 100, unique: true })
+  @Prop({ required: true, minlength: 3, maxlength: 100, unique: true, trim: true })
   name: string;
 }
 

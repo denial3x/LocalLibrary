@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { GenreService } from "./genre.service";
 import { GenreDTO } from "./dto/GenreDTO";
 import { GenreCreationDTO } from "./dto/GenreCreationDTO";
-import { MongoObjectId } from "../MongoObjectId";
+import { ObjectId } from "mongoose";
+import { ParseObjectIdPipe } from "../pipes/parse-object-id.pipe";
 
 @Controller("genres")
 export class GenreController {
@@ -14,12 +15,17 @@ export class GenreController {
   }
 
   @Get(":id")
-  async getGenreById(@Param() mongoObjectId: MongoObjectId): Promise<GenreDTO> {
-    return await this.genreService.getGenreById(mongoObjectId.id);
+  async getGenreById(@Param("id", new ParseObjectIdPipe()) id: ObjectId): Promise<GenreDTO> {
+    return await this.genreService.getGenreById(id);
   }
 
   @Post()
-  async createGenre(@Body() genreCreationDTO: GenreCreationDTO) {
+  async createGenre(@Body() genreCreationDTO: GenreCreationDTO): Promise<GenreDTO> {
     return await this.genreService.createGenre(genreCreationDTO);
+  }
+
+  @Delete(":id")
+  async deleteGenreById(@Param("id", new ParseObjectIdPipe()) id: ObjectId): Promise<GenreDTO> {
+    return await this.genreService.deleteGenreById(id);
   }
 }

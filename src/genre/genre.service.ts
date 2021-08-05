@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, ObjectId } from "mongoose";
 import { GenreMapper } from "./mapper/genre.mapper";
 import { GenreDTO } from "./dto/GenreDTO";
 import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
@@ -14,16 +14,15 @@ export class GenreService {
   ) {}
 
   async getAllGenres(): Promise<GenreDTO[]> {
-    const allGenres = await this.genreModel.find({}).orFail();
+    const allGenres = await this.genreModel.find();
     return allGenres.map((genre) => this.genreMapper.mapToDTO(genre));
   }
 
-  async getGenreById(id: string): Promise<GenreDTO> {
-    const genre = await this.genreModel.findById(id).orFail(new NotFoundException(`Genre with id: '${id}' not found.`));
-    return this.genreMapper.mapToDTO(genre);
+  async getGenreById(id: ObjectId): Promise<GenreDTO> {
+    return this.genreMapper.mapToDTO(await this.findGenreById(id));
   }
 
-  async createGenre(genreCreationDTO: GenreCreationDTO) {
+  async createGenre(genreCreationDTO: GenreCreationDTO): Promise<GenreDTO> {
     if (await this.existsByName(genreCreationDTO.name))
       throw new InternalServerErrorException(`Genre with name: '${genreCreationDTO.name}' already exists.`);
 
@@ -31,7 +30,20 @@ export class GenreService {
     return this.genreMapper.mapToDTO(savedGenre);
   }
 
-  async existsByName(name: string): Promise<boolean> {
-    return await this.genreModel.exists({ name: name });
+  async deleteGenreById(id: ObjectId): Promise<GenreDTO> {
+    const genre = await this.findGenreById(id);
+    genre.delete();
+    return this.genreMapper.mapToDTO(genre);
+  }
+
+  private async findGenreById(id: ObjectId): Promise<GenreDocument> {
+    const genre = await this.genreModel
+      .findById(id)
+      .orFail(new NotFoundException(`Genre with id: '${id}' not found.`));
+    return genre;
+  }
+
+  private async existsByName(name: string): Promise<boolean> {
+    return await this.genreModel.exists({ name: new RegExp(`^${name}$`, "i") });
   }
 }
