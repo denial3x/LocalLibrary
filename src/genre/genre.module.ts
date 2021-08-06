@@ -9,5 +9,6 @@ import { GenreMapper } from "./mapper/genre.mapper";
   imports: [MongooseModule.forFeature([{ name: Genre.name, schema: GenreSchema }])],
   controllers: [GenreController],
   providers: [GenreService, GenreMapper],
+  exports: [GenreService],
 })
 export class GenreModule {}

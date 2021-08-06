@@ -3,7 +3,7 @@ import { GenreService } from "./genre.service";
 import { GenreDTO } from "./dto/GenreDTO";
 import { GenreCreationDTO } from "./dto/GenreCreationDTO";
 import { ObjectId } from "mongoose";
-import { ParseObjectIdPipe } from "../pipes/parse-object-id.pipe";
+import { ParseObjectIdPipe } from "../pipe/parse-object-id.pipe";
 
 @Controller("genres")
 export class GenreController {

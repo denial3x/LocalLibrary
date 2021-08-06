@@ -7,8 +7,8 @@ import { Author, AuthorSchema } from "./schema/author.schema";
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: Author.name, schema: AuthorSchema }])],
-
   controllers: [AuthorController],
-  providers: [AuthorService, AuthorMapper],
+  providers: [AuthorService, AuthorMapper], // Can be Injected in other classes.
+  exports: [AuthorService], // Can be used in other modules.
 })
 export class AuthorModule {}

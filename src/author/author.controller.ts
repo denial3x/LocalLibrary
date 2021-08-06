@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { AuthorService } from "./author.service";
-import { ParseObjectIdPipe } from "../pipes/parse-object-id.pipe";
+import { ParseObjectIdPipe } from "../pipe/parse-object-id.pipe";
 import { ObjectId } from "mongoose";
 import { AuthorDTO } from "./dto/AuthorDTO";
 import { AuthorCreationDTO } from "./dto/AuthorCreationDTO";
