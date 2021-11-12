@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Local Library** is a **(NestJS Framework)** WebApp made in order to "better learn" mongoose. 
+**Local Library** is a **NestJS Framework** WebApp made in order to "better learn" mongoose. 
 The main involved technologies are TypeScript, Mongo (with Mongoose ODM) and Node.
 
 When i decided to learn mongoDB (mongoose in particular), i came across an example/tutorial in MDN Web documentation
